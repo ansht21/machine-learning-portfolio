@@ -1,4 +1,4 @@
-# Car Price Prediction
+﻿# Car Price Prediction
 
 > Professional Machine Learning project for predicting used car selling prices using Random Forest Regressor.
 
@@ -15,21 +15,21 @@
 
 ```
 car_price_prediction/
-├── src/                     # Source code packages
-│   ├── __init__.py
-│   ├── data.py              # Data loading and preprocessing
-│   ├── model.py             # Model training and evaluation
-│   └── utils.py             # Utility functions
-├── data/                    # Data directories
-│   ├── raw/                 # Raw data files
-│   └── processed/           # Processed data files
-├── models/                  # Saved model files
-├── notebooks/               # Jupyter notebooks for exploration
-│   └── car_price_prediction.ipynb
-├── tests/                   # Unit tests
-│   └── test_model.py
-├── requirements.txt         # Python dependencies
-└── README.md                # This file
+â”œâ”€â”€ src/                     # Source code packages
+â”‚   â”œâ”€â”€ __init__.py
+â”‚   â”œâ”€â”€ data.py              # Data loading and preprocessing
+â”‚   â”œâ”€â”€ model.py             # Model training and evaluation
+â”‚   â””â”€â”€ utils.py             # Utility functions
+â”œâ”€â”€ data/                    # Data directories
+â”‚   â”œâ”€â”€ raw/                 # Raw data files
+â”‚   â””â”€â”€ processed/           # Processed data files
+â”œâ”€â”€ models/                  # Saved model files
+â”œâ”€â”€ notebooks/               # Jupyter notebooks for exploration
+â”‚   â””â”€â”€ car_price_prediction.ipynb
+â”œâ”€â”€ tests/                   # Unit tests
+â”‚   â””â”€â”€ test_model.py
+â”œâ”€â”€ requirements.txt         # Python dependencies
+â””â”€â”€ README.md                # This file
 ```
 
 ---
@@ -42,12 +42,12 @@ Predict the selling price of used cars based on their specifications including y
 
 ## Key Features
 
-✅ **Modular Codebase** - Separation of concerns with dedicated modules for data, modeling, and utilities  
-✅ **Reproducible Results** - Fixed random seeds and versioned dependencies  
-✅ **Unit Testing** - Comprehensive test suite to ensure code correctness  
-✅ **Professional Documentation** - Clear docstrings and README  
-✅ **Easy Installation** - Single requirements file for dependencies  
-✅ **Extensible Design** - Easy to add new features or models  
+âœ… **Modular Codebase** - Separation of concerns with dedicated modules for data, modeling, and utilities  
+âœ… **Reproducible Results** - Fixed random seeds and versioned dependencies  
+âœ… **Unit Testing** - Comprehensive test suite to ensure code correctness  
+âœ… **Professional Documentation** - Clear docstrings and README  
+âœ… **Easy Installation** - Single requirements file for dependencies  
+âœ… **Extensible Design** - Easy to add new features or models  
 
 ---
 
@@ -92,7 +92,7 @@ model = train_model(X_train, y_train, n_estimators=100)
 # Evaluate model
 metrics = evaluate_model(model, X_test, y_test)
 print(f"Model Performance:")
-print(f"  R² Score: {metrics['r2']:.3f}")
+print(f"  RÂ² Score: {metrics['r2']:.3f}")
 print(f"  RMSE: {metrics['rmse']:.2f}")
 print(f"  MAE: {metrics['mae']:.2f}")
 
@@ -121,7 +121,7 @@ model = train_model(X_train, y_train)
 metrics = evaluate_model(model, X_test, y_test)
 save_model(model, 'models/car_price_model.pkl')
 
-print(f'Training Complete - R²: {metrics[\"r2\"]:.3f}')
+print(f'Training Complete - RÂ²: {metrics[\"r2\"]:.3f}')
 "
 ```
 
@@ -159,7 +159,7 @@ The model is evaluated using standard regression metrics:
 | **MAE** | $\frac{1}{n}\sum\|y_i - \hat{y}_i\|$ | Average absolute error |
 | **MSE** | $\frac{1}{n}\sum(y_i - \hat{y}_i)^2$ | Average squared error |
 | **RMSE** | $\sqrt{MSE}$ | Error in same units as target |
-| **R²** | $1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}$ | Proportion of variance explained |
+| **RÂ²** | $1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}$ | Proportion of variance explained |
 
 ---
 
@@ -190,12 +190,12 @@ tests/test_model.py::test_model_training PASSED
 After running the training script, you should see output similar to:
 ```
 Model Performance:
-  R² Score: 0.91
+  RÂ² Score: 0.91
   RMSE: 1.69
   MAE: 1.32
 ```
 
-This indicates the model explains 91% of the variance in car prices, with average prediction errors of approximately ₹1.32 lakhs.
+This indicates the model explains 91% of the variance in car prices, with average prediction errors of approximately â‚¹1.32 lakhs.
 
 ---
 
@@ -248,4 +248,4 @@ See the root [LICENSE](../LICENSE) file for details.
 
 ---
 
-[⬅ Back to all ML projects](../README.md)
+[â¬… Back to all ML projects](../README.md)

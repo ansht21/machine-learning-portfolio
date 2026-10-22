@@ -151,7 +151,7 @@ Input (28Ã—28Ã—1)
 
 **How a stakeholder uses this:** a proof-of-work CNN for OCR intake (form digitisation, cheque processing) â€” the same architecture transfers to document classification pipelines.
 
-ðŸ““ [`image_classification_project/notebooks/image_classification.ipynb`](./image_classification_project/notebooks/image_classification.ipynb)
+ðŸ““ [`03_image_classification_project/notebooks/image_classification.ipynb`](./03_image_classification_project/notebooks/image_classification.ipynb)
 
 ---
 
@@ -182,7 +182,7 @@ Raw email text
 
 **How a stakeholder uses this:** an email filter tuned for the costlier error â€” a false positive hides a job offer, so thresholds favour keeping legitimate mail in the inbox.
 
-ðŸ““ [`spam_email_detection_project/`](./spam_email_detection_project/)
+ðŸ““ [`04_spam_email_detection_project/`](./04_spam_email_detection_project/)
 
 ---
 
@@ -212,7 +212,7 @@ Raw sales data
 
 **How a stakeholder uses this:** inventory planners set stock depth per outlet â€” the model shows which outlet types justify deeper shelf allocation and which are structurally capped.
 
-ðŸ““ [`sales_prediction_project/`](./sales_prediction_project/)
+ðŸ““ [`05_sales_prediction_project/`](./05_sales_prediction_project/)
 
 ---
 
@@ -235,7 +235,7 @@ Vehicle listings data
 
 **How a stakeholder uses this:** a marketplace pricing baseline â€” sellers get a defensible price band per vehicle instead of gut-feel quotes, reducing time-to-sale.
 
-ðŸ““ [`car_price_prediction_project/`](./car_price_prediction_project/)
+ðŸ““ [`06_car_price_prediction_project/`](./06_car_price_prediction_project/)
 
 ---
 
@@ -273,7 +273,7 @@ Stratified 80/20 train-test split preserves class proportions.
 
 **How a stakeholder uses this:** a brand-monitoring triage layer â€” positive/neutral posts pass through, likely-negative posts are routed to support for human review.
 
-ðŸ““ [`sentiment_Analysis_project/notebooks/sentiment_analysis.ipynb`](./sentiment_Analysis_project/notebooks/sentiment_analysis.ipynb)
+ðŸ““ [`07_sentiment_analysis_project/notebooks/sentiment_analysis.ipynb`](./07_sentiment_analysis_project/notebooks/sentiment_analysis.ipynb)
 
 ---
 
@@ -299,7 +299,7 @@ Raw listening data
 
 **How a stakeholder uses this:** cold-start-ready recommendations for a growing catalogue â€” every track is recommendable from day one, before any interaction history exists.
 
-ðŸ““ [`music_recommendation_system/notebooks/music_recommendation.ipynb`](./music_recommendation_system/notebooks/music_recommendation.ipynb)
+ðŸ““ [`08_music_recommendation_system/notebooks/music_recommendation.ipynb`](./08_music_recommendation_system/notebooks/music_recommendation.ipynb)
 
 ---
 
@@ -311,15 +311,15 @@ Data-Science-Project/
 â”œâ”€â”€ 02_subscription-retention-prediction/# Churn Â· LogReg + RF, modular pipeline with tests
 â”‚   â”œâ”€â”€ src/                            # data_processing â†’ modeling â†’ explainability
 â”‚   â””â”€â”€ Churn_Prediction_Analysis.ipynb
-â”œâ”€â”€ image_classification_project/       # CNN Â· MNIST digit recognition
+â”œâ”€â”€ 03_image_classification_project/       # CNN Â· MNIST digit recognition
 â”‚   â””â”€â”€ notebooks/image_classification.ipynb
-â”œâ”€â”€ spam_email_detection_project/       # NLP Â· TF-IDF + Logistic Regression
-â”œâ”€â”€ sales_prediction_project/           # Regression Â· Linear Regression
-â”œâ”€â”€ car_price_prediction_project/       # Regression Â· Random Forest
-â”œâ”€â”€ sentiment_Analysis_project/         # NLP Â· tweet sentiment classification
+â”œâ”€â”€ 04_spam_email_detection_project/       # NLP Â· TF-IDF + Logistic Regression
+â”œâ”€â”€ 05_sales_prediction_project/           # Regression Â· Linear Regression
+â”œâ”€â”€ 06_car_price_prediction_project/       # Regression Â· Random Forest
+â”œâ”€â”€ 07_sentiment_analysis_project/         # NLP Â· tweet sentiment classification
 â”‚   â”œâ”€â”€ dataset/sentiment_analysis.csv
 â”‚   â””â”€â”€ notebooks/sentiment_analysis.ipynb
-â””â”€â”€ music_recommendation_system/        # Content-based recommender
+â””â”€â”€ 08_music_recommendation_system/        # Content-based recommender
     â”œâ”€â”€ dataset/music_dataset.csv
     â””â”€â”€ notebooks/music_recommendation.ipynb
 ```
@@ -364,15 +364,15 @@ python 02_subscription-retention-prediction/src/run_pipeline.py --help
 **Image Classification** â€” no setup needed; MNIST downloads automatically on first run.
 
 ```bash
-jupyter notebook image_classification_project/notebooks/image_classification.ipynb
+jupyter notebook 03_image_classification_project/notebooks/image_classification.ipynb
 ```
 
 **Spam Detection Â· Sales Prediction Â· Car Price Prediction** â€” open the notebook in each project folder and run all cells.
 
 ```bash
-jupyter notebook spam_email_detection_project/
-jupyter notebook sales_prediction_project/
-jupyter notebook car_price_prediction_project/
+jupyter notebook 04_spam_email_detection_project/
+jupyter notebook 05_sales_prediction_project/
+jupyter notebook 06_car_price_prediction_project/
 ```
 
 > **Datasets not included.** These three notebooks expect `spam_mail.csv`, `sales dataset.csv`, and `car_data.csv` respectively, which aren't committed to this repository. Place your own copy alongside the notebook, or update the `read_csv()` path in the first cell. The notebooks retain their saved outputs, so the results are reproducible reading even without the raw files.
@@ -380,7 +380,7 @@ jupyter notebook car_price_prediction_project/
 **Sentiment Analysis** â€” downloads NLTK corpora on first run.
 
 ```bash
-cd sentiment_Analysis_project/notebooks
+cd 07_sentiment_analysis_project/notebooks
 jupyter notebook sentiment_analysis.ipynb
 ```
 
@@ -389,7 +389,7 @@ jupyter notebook sentiment_analysis.ipynb
 **Music Recommendation**
 
 ```bash
-cd music_recommendation_system/notebooks
+cd 08_music_recommendation_system/notebooks
 jupyter notebook music_recommendation.ipynb
 ```
 

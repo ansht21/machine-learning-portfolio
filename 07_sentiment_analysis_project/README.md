@@ -1,4 +1,4 @@
-# Sentiment Analysis — Tweet Classification
+﻿# Sentiment Analysis â€” Tweet Classification
 
 Professional NLP pipeline for tweet sentiment classification using TF-IDF and Logistic Regression.
 
@@ -6,23 +6,23 @@ Result: 71% accuracy, 0.70 weighted F1
 
 ## Project Structure
 
-sentiment_Analysis_project/
-├── src/
-│   ├── __init__.py
-│   ├── data.py
-│   ├── model.py
-│   └── utils.py
-├── data/
-│   ├── raw/
-│   └── processed/
-├── models/
-├── dataset/
-├── notebooks/
-│   └── sentiment_analysis.ipynb
-├── tests/
-│   └── test_basic.py
-├── requirements.txt
-└── README.md
+07_07_sentiment_analysis_project/
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ __init__.py
+â”‚   â”œâ”€â”€ data.py
+â”‚   â”œâ”€â”€ model.py
+â”‚   â””â”€â”€ utils.py
+â”œâ”€â”€ data/
+â”‚   â”œâ”€â”€ raw/
+â”‚   â””â”€â”€ processed/
+â”œâ”€â”€ models/
+â”œâ”€â”€ dataset/
+â”œâ”€â”€ notebooks/
+â”‚   â””â”€â”€ sentiment_analysis.ipynb
+â”œâ”€â”€ tests/
+â”‚   â””â”€â”€ test_basic.py
+â”œâ”€â”€ requirements.txt
+â””â”€â”€ README.md
 
 ## Problem Statement
 
@@ -30,18 +30,18 @@ Classify social media posts as positive, negative, or neutral.
 
 ## Key Features
 
-✅ Modular Codebase
-✅ Reproducible Results
-✅ Unit Testing
-✅ Professional Documentation
-✅ Easy Installation
-✅ Extensible Design
+âœ… Modular Codebase
+âœ… Reproducible Results
+âœ… Unit Testing
+âœ… Professional Documentation
+âœ… Easy Installation
+âœ… Extensible Design
 
 ## Installation
 
 ```bash
 git clone https://gitlab.com/ansht_121/data-science-projects.git
-cd data-science-projects/sentiment_Analysis_project
+cd Data-Science-Project/07_sentiment_analysis_project
 pip install -r requirements.txt
 ```
 
@@ -55,8 +55,8 @@ jupyter notebook notebooks/sentiment_analysis.ipynb
 ### 2. Using Python Script
 ```python
 import pandas as pd
-from sentiment_Analysis_project.src.data import load_data, preprocess_text, prepare_features, split_data
-from sentiment_Analysis_project.src.model import train_model, evaluate_model, save_model, predict_sentiment
+from 07_sentiment_analysis_project.src.data import load_data, preprocess_text, prepare_features, split_data
+from 07_sentiment_analysis_project.src.model import train_model, evaluate_model, save_model, predict_sentiment
 
 # Load data
 df = load_data("dataset/sentiment_analysis.csv")
@@ -155,4 +155,4 @@ Adjust Logistic Regression parameters (C, penalty, solver, class_weight).
 - TF-IDF: https://en.wikipedia.org/wiki/Tf%E2%80%93idf
 - Pang, B., Lee, L., & Vaithyanathan, S. (2002). "Thumbs up? Sentiment Classification using Machine Learning Techniques." EMNLP.
 
-[⬅ Back to all ML projects](../README.md)
+[â¬… Back to all ML projects](../README.md)

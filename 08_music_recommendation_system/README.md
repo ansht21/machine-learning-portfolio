@@ -1,27 +1,27 @@
-# Music Recommendation System
+﻿# Music Recommendation System
 
 Content-based music recommendation system using song features.
 
 ## Project Structure
 
-music_recommendation_system/
-├── src/
-│   ├── __init__.py
-│   ├── data.py
-│   ├── model.py
-│   └── utils.py
-├── data/
-│   ├── raw/
-│   └── processed/
-├── models/
-├── dataset/
-├── notebooks/
-│   └── music_recommendation.ipynb
-├── tests/
-│   └── test_basic.py
-├── requirements.txt
-├── params.yaml
-└── README.md
+08_music_recommendation_system/
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ __init__.py
+â”‚   â”œâ”€â”€ data.py
+â”‚   â”œâ”€â”€ model.py
+â”‚   â””â”€â”€ utils.py
+â”œâ”€â”€ data/
+â”‚   â”œâ”€â”€ raw/
+â”‚   â””â”€â”€ processed/
+â”œâ”€â”€ models/
+â”œâ”€â”€ dataset/
+â”œâ”€â”€ notebooks/
+â”‚   â””â”€â”€ music_recommendation.ipynb
+â”œâ”€â”€ tests/
+â”‚   â””â”€â”€ test_basic.py
+â”œâ”€â”€ requirements.txt
+â”œâ”€â”€ params.yaml
+â””â”€â”€ README.md
 
 ## Problem Statement
 
@@ -29,13 +29,13 @@ Build a content-based music recommendation system that suggests similar songs ba
 
 ## Key Features
 
-✅ Modular Codebase
-✅ Reproducible Results
-✅ Configuration Management (params.yaml)
-✅ Unit Testing
-✅ Professional Documentation
-✅ Easy Installation
-✅ Extensible Design
+âœ… Modular Codebase
+âœ… Reproducible Results
+âœ… Configuration Management (params.yaml)
+âœ… Unit Testing
+âœ… Professional Documentation
+âœ… Easy Installation
+âœ… Extensible Design
 
 ## Installation
 

@@ -1,4 +1,4 @@
-# Image Classification — Handwritten Digit Recognition
+﻿# Image Classification â€” Handwritten Digit Recognition
 
 > Professional TensorFlow/Keras CNN for MNIST handwritten digit recognition.
 
@@ -14,40 +14,40 @@
 ## Project Structure
 
 ```
-image_classification_project/
-├── src/                     # Source code packages
-│   ├── __init__.py
-│   ├── data.py              # Data loading and preprocessing
-│   ├── model.py             # Model building and training
-│   └── utils.py             # Utility functions
-├── data/                    # Data directories
-│   ├── raw/                 # Raw data files (MNIST auto-downloaded)
-│   └── processed/           # Processed data files
-├── models/                  # Saved model files
-├── notebooks/               # Jupyter notebooks for exploration
-│   └── image_classification.ipynb
-├── tests/                   # Unit tests
-│   └── test_basic.py
-├── requirements.txt         # Python dependencies
-└── README.md                # This file
+03_image_classification_project/
+â”œâ”€â”€ src/                     # Source code packages
+â”‚   â”œâ”€â”€ __init__.py
+â”‚   â”œâ”€â”€ data.py              # Data loading and preprocessing
+â”‚   â”œâ”€â”€ model.py             # Model building and training
+â”‚   â””â”€â”€ utils.py             # Utility functions
+â”œâ”€â”€ data/                    # Data directories
+â”‚   â”œâ”€â”€ raw/                 # Raw data files (MNIST auto-downloaded)
+â”‚   â””â”€â”€ processed/           # Processed data files
+â”œâ”€â”€ models/                  # Saved model files
+â”œâ”€â”€ notebooks/               # Jupyter notebooks for exploration
+â”‚   â””â”€â”€ image_classification.ipynb
+â”œâ”€â”€ tests/                   # Unit tests
+â”‚   â””â”€â”€ test_basic.py
+â”œâ”€â”€ requirements.txt         # Python dependencies
+â””â”€â”€ README.md                # This file
 ```
 
 ---
 
 ## Problem Statement
 
-Recognise handwritten digits (0–9) from the MNIST dataset — a foundational computer vision task with applications in postal automation, cheque processing, and form recognition.
+Recognise handwritten digits (0â€“9) from the MNIST dataset â€” a foundational computer vision task with applications in postal automation, cheque processing, and form recognition.
 
 ---
 
 ## Key Features
 
-✅ **Modular Codebase** - Separation of concerns with dedicated modules for data, modeling, and utilities  
-✅ **Reproducible Results** - Fixed random seeds and versioned dependencies  
-✅ **Unit Testing** - Basic test suite to ensure code correctness  
-✅ **Professional Documentation** - Clear docstrings and README  
-✅ **Easy Installation** - Single requirements file for dependencies  
-✅ **Extensible Design** - Easy to modify architecture or add new datasets  
+âœ… **Modular Codebase** - Separation of concerns with dedicated modules for data, modeling, and utilities  
+âœ… **Reproducible Results** - Fixed random seeds and versioned dependencies  
+âœ… **Unit Testing** - Basic test suite to ensure code correctness  
+âœ… **Professional Documentation** - Clear docstrings and README  
+âœ… **Easy Installation** - Single requirements file for dependencies  
+âœ… **Extensible Design** - Easy to modify architecture or add new datasets  
 
 ---
 
@@ -101,10 +101,10 @@ save_model(model, "models/mnist_cnn.h5")
 
 **Algorithm**: Convolutional Neural Network (CNN)  
 **Architecture**:
-- Conv2D(32, 3×3, ReLU) → MaxPooling2D(2×2)
-- Conv2D(64, 3×3, ReLU) → MaxPooling2D(2×2)
-- Conv2D(64, 3×3, ReLU)
-- Flatten → Dense(64, ReLU) → Dropout(0.5) → Dense(10, Softmax)
+- Conv2D(32, 3Ã—3, ReLU) â†’ MaxPooling2D(2Ã—2)
+- Conv2D(64, 3Ã—3, ReLU) â†’ MaxPooling2D(2Ã—2)
+- Conv2D(64, 3Ã—3, ReLU)
+- Flatten â†’ Dense(64, ReLU) â†’ Dropout(0.5) â†’ Dense(10, Softmax)
 
 **Why CNN for MNIST?**
 - Spatial hierarchies: CNNs excel at capturing local patterns (edges, curves) and combining them into complex features
@@ -166,11 +166,11 @@ This indicates the model achieves 98.83% accuracy on the MNIST test set.
 
 ## Data Requirements
 
-No manual download required — the MNIST dataset is automatically fetched and cached by TensorFlow/Keras on first run.
+No manual download required â€” the MNIST dataset is automatically fetched and cached by TensorFlow/Keras on first run.
 
 The dataset consists of:
-- **Training set**: 60,000 grayscale images (28×28 pixels)
-- **Test set**: 10,000 grayscale images (28×28 pixels)
+- **Training set**: 60,000 grayscale images (28Ã—28 pixels)
+- **Test set**: 10,000 grayscale images (28Ã—28 pixels)
 - **Labels**: Integers from 0 to 9 representing the digit shown
 
 ---
@@ -202,4 +202,4 @@ The dataset consists of:
 
 ---
 
-[⬅ Back to all ML projects](../README.md)
+[â¬… Back to all ML projects](../README.md)
