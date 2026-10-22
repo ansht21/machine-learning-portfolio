@@ -1,0 +1,11 @@
+# Data Science Projects — shared environment
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+tensorflow
+keras
+nltk
+jupyter
+pytest
