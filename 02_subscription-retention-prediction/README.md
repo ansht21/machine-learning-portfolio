@@ -62,6 +62,9 @@ Open in Excel and click any chart or use the filter dropdowns to explore the dat
 The ML layer answers *who will churn and with what probability*; the GenAI layer
 answers *what to do about it* — grounded in real dataset evidence, never invented.
 
+![Live dashboard — ML churn score (left) + RAG-grounded GenAI retention offer (right)](image/retention_gateway_ai_offer.png)
+*Live Streamlit dashboard: the classifier scores a 1-month month-to-month fiber customer at 54.1% (Medium risk); the RAG layer retrieved similar historical profiles from the 7,043-customer vector index and the LLM generated a "Rate Waiver" offer with a $10/mo cost-impact estimate — strict-JSON, Pydantic-validated.*
+
 ### Two-stage gateway
 
 ```

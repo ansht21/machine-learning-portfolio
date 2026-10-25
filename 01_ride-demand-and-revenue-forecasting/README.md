@@ -37,6 +37,9 @@ above its one-step 95% upper confidence bound is, statistically, an outlier
 (the model holds an 8.3% MAPE, so breaches are not ordinary noise). This layer
 turns that silent statistical signal into an automated operational response.
 
+![Live portal — CI-breach alert + automated LLM tactical brief](image/forecast_guard_ai_brief.png)
+*Live Streamlit portal: observed demand of 220 trips/hr breaches the SARIMA 95% upper bound (140) by +120%, and the zero-shot LLM chain instantly writes a grounded Markdown brief — surge strategy, vehicle tier allocation, and fleet deployment referencing the exact breach numbers.*
+
 ```
 SARIMA forecast (band) ──► observed demand ──► breach?
                                 │                         │
