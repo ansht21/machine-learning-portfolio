@@ -57,6 +57,86 @@ Open in Excel and click any chart or use the filter dropdowns to explore the dat
 
 ---
 
+## 🤖 GenAI Retention Layer (`/predict/v2`)
+
+The ML layer answers *who will churn and with what probability*; the GenAI layer
+answers *what to do about it* — grounded in real dataset evidence, never invented.
+
+### Two-stage gateway
+
+```
+customer features ──► Stage 1: classifier (ROC-AUC 0.839, threshold 0.17)
+                          │
+                          ├─ risk < 0.70 ──► plain prediction
+                          │
+                          └─ risk ≥ 0.70 ──► Stage 2 (RAG):
+                                ├─ retrieve 3 most-similar historical customers
+                                │   (ChromaDB + all-MiniLM-L6-v2 embeddings)
+                                └─ LLM (Groq · gpt-oss-120b, free key)
+                                    └─ strict-JSON retention offer
+                                        (Pydantic-validated: grievance,
+                                        incentive, pitch, cost impact)
+```
+
+**Design choices (and why):**
+- **Grounded retrieval, not "chat with data":** every customer row in the Telco
+  dataset is embedded as a natural-language profile; the incoming customer's
+  profile is the query, so retrieved context = genuinely similar historical cases
+- **Cost control:** the LLM fires only for high-risk customers — plain inference
+  for everything else
+- **Hallucination containment:** `temperature=0.1`, a `JsonOutputParser` +
+  Pydantic schema (`RetentionStrategy`) enforce a fixed 4-field offer contract,
+  and the prompt forbids inventing facts outside the retrieved evidence
+- **Graceful degradation:** no API key / no index → the API still returns the
+  correct ML prediction with a `genai_note` instead of failing
+
+### Run the full stack (API + dashboard)
+
+```bash
+docker compose up --build
+# API   → http://localhost:8000/docs   (POST /predict/v2)
+# UI    → http://localhost:8501       (enter customer → ML score + AI offer)
+```
+
+### Run locally without Docker
+
+```bash
+pip install -r requirements-api.txt
+python -m app.build_vector_index          # one-off ChromaDB build (~7k docs)
+cp .env.example .env && set GROQ_API_KEY  # free key: https://console.groq.com
+uvicorn app.main:app --port 8000          # terminal 1
+pip install -r requirements-ui.txt
+streamlit run app/frontend.py             # terminal 2 → http://localhost:8501
+```
+
+### Example `/predict/v2` response (high-risk customer)
+
+```json
+{
+  "churn_probability": 0.8142,
+  "risk_band": "High",
+  "retrieved_evidence": [
+    "5-month customer: Month-to-month contract, Fiber optic internet, TechSupport=No, ... outcome: customer left.",
+    "..."
+  ],
+  "ai_retention_intervention": {
+    "primary_grievance": "Price-to-value gap: new month-to-month fibre customer paying premium with no support add-ons bundled, matching the profile of historical churners who cited bill shock.",
+    "incentive_category": "Rate Waiver",
+    "personalized_offer_text": "We want to keep you on our fastest network — 10% off for 12 months plus complementary TechSupport add-on while we audit your bill setup.",
+    "dollar_cost_impact": 8.75
+  }
+}
+```
+
+### Infrastructure
+
+- **Dockerfile:** hardened multi-stage build (native wheel compile stage →
+  slim non-root runtime, UID 8888, curl-based HEALTHCHECK)
+- **docker-compose:** `retention-api` + `retention-dashboard` (Streamlit) with
+  service-health gating and persistent `chroma_data` / `hf_cache` volumes
+
+---
+
 ## Statistical Validation (in `Churn_EDA_Analysis.ipynb`)
 
 Every segment finding is tested formally (alpha = 0.05) with effect sizes, so the gaps are

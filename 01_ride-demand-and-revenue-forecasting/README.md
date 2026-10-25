@@ -20,6 +20,43 @@ pip install pandas numpy matplotlib seaborn scikit-learn statsmodels jupyter
 ```
 All charts are saved to `image/` and cluster assignments to `outputs/demand_cluster_cells.csv` by the notebook itself. Power BI report: [`powerbi/UberTrip_Dashboard.pbix`](powerbi/UberTrip_Dashboard.pbix). Excel dashboard: [`excel_analysis/uber_trips_data.xlsx`](excel_analysis/uber_trips_data.xlsx).
 
+### Bonus: run the GenAI Forecast Guard portal locally
+
+```bash
+pip install -r requirements.txt langchain-openai streamlit requests
+set GROQ_API_KEY=<free key — https://console.groq.com>   # optional
+streamlit run app_ops.py --server.port 8502
+```
+
+---
+
+## 🤖 GenAI Forecast Guard (`forecast_guard.py` + `app_ops.py`)
+
+The SARIMA model already knows when reality is abnormal: any hourly observation
+above its one-step 95% upper confidence bound is, statistically, an outlier
+(the model holds an 8.3% MAPE, so breaches are not ordinary noise). This layer
+turns that silent statistical signal into an automated operational response.
+
+```
+SARIMA forecast (band) ──► observed demand ──► breach?
+                                │                         │
+                                ├─ inside band ──► ✅ status: normal
+                                └─ > 95% upper bound ──► zero-shot LLM chain
+                                                        └─ Markdown tactical brief:
+                                                           surge strategy · tier
+                                                           allocation · fleet deployment
+```
+
+- **Decision is math, communication is AI:** the trigger is purely the model's
+  confidence interval — the LLM never decides *whether* something is anomalous,
+  only *what to do about it* (grounded in the exact breach numbers)
+- **Zero-shot, temperature 0:** deterministic output format (Markdown brief:
+  ## Surge strategy / ## Vehicle tier allocation / ## Fleet deployment)
+- **Free-first:** runs on Groq (llama-3.3-70b) with a free API key; degrades to
+  a static advisory document without any key
+- `app_ops.py` is the Streamlit operations portal: set observed vs expected
+  demand, see the variance metrics and the AI brief the moment the band breaks
+
 ---
 
 ## Business Questions Answered

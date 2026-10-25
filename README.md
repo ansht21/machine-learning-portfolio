@@ -2,7 +2,7 @@
 
 # Data Science Projects
 
-### Eight end-to-end ML projects â€” led by ride-demand forecasting & churn retention â€” spanning time series, churn modeling, NLP, deep learning, regression, and recommendation systems
+### Eight end-to-end ML projects — led by ride-demand forecasting & churn retention — spanning time series, churn modeling, GenAI/RAG, NLP, deep learning, regression, and recommendation systems
 
 ![Python](https://img.shields.io/badge/Python-3.10-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
@@ -10,6 +10,8 @@
 ![Keras](https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white)
 ![NLTK](https://img.shields.io/badge/NLTK-154F5B?style=for-the-badge&logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![LangChain](https://img.shields.io/badge/LangChain-GenAI_RAG-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)
+![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector_Search-FF5555?style=for-the-badge)
 
 <br/>
 
@@ -27,8 +29,8 @@
 
 | # | Project | Problem Type | Approach | Result |
 |---|---------|--------------|----------|--------|
-| 1 | [Ride Demand and Revenue Forecasting](#1--ride-demand-and-revenue-forecasting) | Time series Â· Clustering Â· Regression | SARIMA Â· K-Means Â· Random Forest | **RÂ² = 0.972** fare model Â· **MAPE 8.3%** forecast |
-| 2 | [Subscription Churn Prediction](#2--subscription-churn-prediction--retention-analytics) | Binary classification | LogReg + Random Forest + explainability | **ROC-AUC 0.839** Â· 80.0% accuracy |
+| 1 | [Ride Demand and Revenue Forecasting](#1--ride-demand-and-revenue-forecasting) | Time series · Clustering · Regression | SARIMA · K-Means · Random Forest · LLM Forecast Guard | **R² = 0.972** fare model · **MAPE 8.3%** forecast · **GenAI anomaly briefs** |
+| 2 | [Subscription Churn Prediction](#2--subscription-churn-prediction--retention-analytics) | Binary classification · RAG | LogReg + Random Forest · ChromaDB RAG + LLM offers | **ROC-AUC 0.839** · 80.0% accuracy · **GenAI retention gateway** |
 
 > **Note:** These two projects are cross-listed from the [Data Analytics repository](https://gitlab.com/ansht_121/data-analytics) â€” the SQL / EDA / dashboard layers live there; this repository contains the full predictive modeling layer.
 
