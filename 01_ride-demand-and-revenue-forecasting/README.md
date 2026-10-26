@@ -1,5 +1,11 @@
 ﻿# Ride Demand and Revenue Forecasting
 
+> 🎉 **Live demo is up:** [**Forecast Guard Ops on Hugging Face Spaces**](https://huggingface.co/spaces/ansht11/forecast-guard-ops)
+> — SARIMA breach detector + Groq LLM tactical brief, running free-tier.
+> Direct app: https://ansht11-forecast-guard-ops.hf.space
+
+![Forecast Guard live demo — breach alert + LLM tactical brief](image/forecast_guard_live_demo.png)
+
 **Business problem:** A ride-hailing operator needs to know *when* to surge-price, *where*
 to position premium vehicles, and *which* fleet tier to grow â€” using 35,000 trip records.
 
@@ -258,4 +264,20 @@ the fare model lives in [`UberTripAnalysis.ipynb`](./UberTripAnalysis.ipynb).
   * **RÂ² = 0.972** â€” the model explains **97% of fare variance**
   * **RMSE = â‚¹37.4** against an average fare of ~â‚¹289 â€” prediction error is ~13% of a typical trip
 * **Why it matters:** with a fair "expected fare" in hand, every observed discount, surge multiplier, or route deviation becomes directly attributable to policy rather than trip mix. The clusters above (premium long-haul vs volume short-haul) now have a per-trip revenue anchor, so the two analyses compound.
-* **Limitation flag:** like the SARIMA model, the fare model is built on a single 2024 year â€” seasonal fare swings are learned from the weekly/weekend patterns that *are* present, not from a recurring annual cycle.
+* **Limitation flag:** like the SARIMA model, the fare model is built on a single 2024 year â€" seasonal fare swings are learned from the weekly/weekend patterns that *are* present, not from a recurring annual cycle.
+
+---
+
+## 🛠️ Tech Stack & Deployment
+
+| Layer | Technology |
+|---|---|
+| **Analysis / ML** | Python, Jupyter, pandas, NumPy, scikit-learn (Random Forest), statsmodels (SARIMA), K-Means clustering |
+| **Data engineering** | SQL (MySQL) data cleaning + revenue queries, 35,000-trip pipeline |
+| **BI / visualization** | Power BI dashboard, Excel dashboards, matplotlib/seaborn |
+| **GenAI layer** | LangChain (zero-shot LLM chain), Groq `gpt-oss-120b` (free tier), Pydantic-style gated prompt design |
+| **API / serving** | FastAPI-ready `ForecastAnomalyAnalyzer` class, Streamlit ops portal |
+| **Cloud deployment** | **Hugging Face Spaces** (Gradio SDK, ZeroGPU free tier) — [live demo](https://huggingface.co/spaces/ansht11/forecast-guard-ops) |
+| **DevOps** | Git/GitLab, venv-based reproducibility, secrets via Space settings (never in code) |
+
+**Cloud deployment flow:** code pushed with `git` to the Space repo → HF builds a container from `requirements.txt` → Gradio app served on a public HTTPS endpoint (`https://ansht11-forecast-guard-ops.hf.space`) → `GROQ_API_KEY` injected at runtime via managed secrets.

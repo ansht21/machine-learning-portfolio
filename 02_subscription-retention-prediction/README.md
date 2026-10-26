@@ -6,6 +6,8 @@
 
 ![AI Retention Gateway live demo](image/retention_gateway_live_demo.png)
 
+![AI Retention Gateway live demo](image/retention_gateway_live_demo.png)
+
 **Business problem:** A subscription business (real-world telco data, 7,043 customers) is
 losing ~26% of customers. Which customers leave, why, and what does the revenue at risk
 look like?
@@ -284,3 +286,20 @@ python src/train.py                          # reproducible pipeline + model art
 ```
 
 All charts are saved to `image/` and analysis tables to `outputs/` by the notebook itself.
+
+---
+
+## 🛠️ Tech Stack & Deployment
+
+| Layer | Technology |
+|---|---|
+| **Analysis / ML** | Python, Jupyter, pandas, SQL (MySQL), scikit-learn (LogReg + Random Forest), imbalanced-learn (class balancing), engineered features (`charge_ratio`, `tenure_x_monthly`) |
+| **GenAI layer** | LangChain, **ChromaDB** vector index (7,043 embedded customer profiles), `all-MiniLM-L6-v2` sentence-transformers, Groq `gpt-oss-120b` (free tier), Pydantic strict-JSON output contract |
+| **API** | FastAPI + Uvicorn (`POST /predict`, `POST /predict/v2`), Pydantic request/response models |
+| **UI** | Streamlit dashboard; Gradio Blocks on the hosted demo |
+| **Containers** | Docker multi-stage build (MLflow + XGBoost artifacts included), docker-compose (API + UI stack) |
+| **Testing** | pytest suite (scoring, feature contract, graceful degradation without API key) |
+| **Cloud deployment** | **Hugging Face Spaces** (Gradio SDK, ZeroGPU free tier) — [live demo](https://huggingface.co/spaces/ansht11/retention-gateway-api) |
+| **DevOps** | Git/GitLab, CI-style reproducible pipeline (`src/train.py`), secrets via managed Space settings (never in code), Git LFS for model/vector-index artifacts |
+
+**Cloud deployment flow:** repo pushed with `git` (prebuilt ChromaDB index via Git LFS) → HF builds the container → Gradio gateway served at a public HTTPS endpoint (`https://ansht11-retention-gateway-api.hf.space`) → `GROQ_API_KEY` injected at runtime as a managed secret → cost-gated two-stage inference (ML always on, LLM only for Medium/High risk).
