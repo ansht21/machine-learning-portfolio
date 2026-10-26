@@ -60,10 +60,7 @@ answer / action comment block (same style as the Uber and supply-chain repos).
 - **Customer_Detail** sheet - an autofiltered Excel table with customer-level filters for contract, internet service, payment method, tenure, charges, and churn
 - **ChartData** sheet - visible, chart-ready pivot tables for auditability
 
-Open in Excel and click any chart or use the filter dropdowns to explore the data interactively.
-
-![Churn Dashboard](image/Churn_Dashboard_screenshot.png)
-*Preview of the Dashboard sheet â€” KPI cards with four native Excel charts (re-render via `src/render_dashboard_screenshot.py`).*
+Open in Excel and click any chart or use the filter dropdowns to explore the data interactively (preview shown at the top of this README; re-render via `src/render_dashboard_screenshot.py`).
 
 ---
 
