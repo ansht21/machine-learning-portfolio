@@ -76,9 +76,9 @@ answers *what to do about it* — grounded in real dataset evidence, never inven
 ```
 customer features ──► Stage 1: classifier (ROC-AUC 0.839, threshold 0.17)
                           │
-                          ├─ risk < 0.70 ──► plain prediction
+                          ├─ risk band Low (< 0.40) ──► plain prediction
                           │
-                          └─ risk ≥ 0.70 ──► Stage 2 (RAG):
+                          └─ risk band Medium/High (≥ 0.40) ──► Stage 2 (RAG):
                                 ├─ retrieve 3 most-similar historical customers
                                 │   (ChromaDB + all-MiniLM-L6-v2 embeddings)
                                 └─ LLM (Groq · gpt-oss-120b, free key)
@@ -91,8 +91,8 @@ customer features ──► Stage 1: classifier (ROC-AUC 0.839, threshold 0.17)
 - **Grounded retrieval, not "chat with data":** every customer row in the Telco
   dataset is embedded as a natural-language profile; the incoming customer's
   profile is the query, so retrieved context = genuinely similar historical cases
-- **Cost control:** the LLM fires only for high-risk customers — plain inference
-  for everything else
+- **Cost control:** the LLM fires only for Medium/High-risk customers (risk-band
+  gate, tunable via `AI_TRIGGER_BAND` env var) — plain inference for everything else
 - **Hallucination containment:** `temperature=0.1`, a `JsonOutputParser` +
   Pydantic schema (`RetentionStrategy`) enforce a fixed 4-field offer contract,
   and the prompt forbids inventing facts outside the retrieved evidence
