@@ -70,10 +70,8 @@ Open in Excel and click any chart or use the filter dropdowns to explore the dat
 ## 🤖 GenAI Retention Layer (`/predict/v2`)
 
 The ML layer answers *who will churn and with what probability*; the GenAI layer
-answers *what to do about it* — grounded in real dataset evidence, never invented.
-
-![Deployed app — ML churn score + RAG-grounded GenAI retention offer (Groq · gpt-oss-120b)](image/retention_gateway_live_demo.png)
-*Live Hugging Face Space: the classifier scores a 1-month month-to-month fiber customer at 55.9% (Medium risk); the RAG layer retrieved similar historical profiles from the 7,043-customer vector index and the LLM generated a "Rate Waiver" offer with a $10/mo cost-impact estimate — strict-JSON, Pydantic-validated. The local Streamlit stack (`python -m uvicorn app.main:app` + `streamlit run app/frontend.py`) exposes the same pipeline via FastAPI `POST /predict/v2`.*
+answers *what to do about it* — grounded in real dataset evidence, never invented
+(the live screenshot at the top of this README shows the full two-stage output).
 
 ### Two-stage gateway
 
