@@ -1,12 +1,14 @@
 ﻿# Subscription Retention Prediction
 
+![Churn Dashboard](image/Churn_Dashboard_screenshot.png)
+*Executive Excel dashboard — KPI cards + four native charts (contract, tenure, internet service, revenue-at-risk).*
+
 > 🎉 **Live demo is up:** [**AI Retention Gateway on Hugging Face Spaces**](https://huggingface.co/spaces/ansht11/retention-gateway-api)
 > — real RF classifier (**ROC-AUC 0.839**) + ChromaDB RAG + Groq LLM generating retention offers, running free-tier.
 > Direct app: https://ansht11-retention-gateway-api.hf.space
 
 ![AI Retention Gateway live demo](image/retention_gateway_live_demo.png)
-
-![AI Retention Gateway live demo](image/retention_gateway_live_demo.png)
+*Live deployed app: RF classifier scores a 1-month month-to-month fiber customer at 55.9% (Medium), the RAG layer retrieves similar historical profiles from the 7,043-customer index, and Groq's LLM returns a "Rate Waiver" offer with a $10/mo cost estimate.*
 
 **Business problem:** A subscription business (real-world telco data, 7,043 customers) is
 losing ~26% of customers. Which customers leave, why, and what does the revenue at risk
@@ -70,8 +72,8 @@ Open in Excel and click any chart or use the filter dropdowns to explore the dat
 The ML layer answers *who will churn and with what probability*; the GenAI layer
 answers *what to do about it* — grounded in real dataset evidence, never invented.
 
-![Live dashboard — ML churn score (left) + RAG-grounded GenAI retention offer (right)](image/retention_gateway_ai_offer.png)
-*Live Streamlit dashboard: the classifier scores a 1-month month-to-month fiber customer at 54.1% (Medium risk); the RAG layer retrieved similar historical profiles from the 7,043-customer vector index and the LLM generated a "Rate Waiver" offer with a $10/mo cost-impact estimate — strict-JSON, Pydantic-validated.*
+![Deployed app — ML churn score + RAG-grounded GenAI retention offer (Groq · gpt-oss-120b)](image/retention_gateway_live_demo.png)
+*Live Hugging Face Space: the classifier scores a 1-month month-to-month fiber customer at 55.9% (Medium risk); the RAG layer retrieved similar historical profiles from the 7,043-customer vector index and the LLM generated a "Rate Waiver" offer with a $10/mo cost-impact estimate — strict-JSON, Pydantic-validated. The local Streamlit stack (`python -m uvicorn app.main:app` + `streamlit run app/frontend.py`) exposes the same pipeline via FastAPI `POST /predict/v2`.*
 
 ### Two-stage gateway
 

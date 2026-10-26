@@ -1,5 +1,8 @@
 ﻿# Ride Demand and Revenue Forecasting
 
+![Uber Trip Analysis Dashboard](image/PowerBi_Dashboard.png)
+*Demand is not spread evenly across the day â€" a single evening spike drives the business. The hourly bars show ~350 trips at 3 AM against 4,053 at 6 PM.*
+
 > 🎉 **Live demo is up:** [**Forecast Guard Ops on Hugging Face Spaces**](https://huggingface.co/spaces/ansht11/forecast-guard-ops)
 > — SARIMA breach detector + Groq LLM tactical brief, running free-tier.
 > Direct app: https://ansht11-forecast-guard-ops.hf.space
@@ -7,14 +10,11 @@
 ![Forecast Guard live demo — breach alert + LLM tactical brief](image/forecast_guard_live_demo.png)
 
 **Business problem:** A ride-hailing operator needs to know *when* to surge-price, *where*
-to position premium vehicles, and *which* fleet tier to grow â€” using 35,000 trip records.
-
-![Uber Trip Analysis Dashboard](image/PowerBi_Dashboard.png)
-*Demand is not spread evenly across the day â€” a single evening spike drives the business. The hourly bars show ~350 trips at 3 AM against 4,053 at 6 PM.*
+to position premium vehicles, and *which* fleet tier to grow â€" using 35,000 trip records.
 
 > â„¹ *Data note: this is a simulated dataset (uniform monthly volume, 5 pickup zones).
 > The workflow and analytical techniques are the deliverable, not real Uber metrics.
-> Fares are in â‚¹ (INR) â€” the dataset uses Indian payment methods including UPI.*
+> Fares are in â‚¹ (INR) â€" the dataset uses Indian payment methods including UPI.*
 
 ---
 
@@ -43,8 +43,8 @@ above its one-step 95% upper confidence bound is, statistically, an outlier
 (the model holds an 8.3% MAPE, so breaches are not ordinary noise). This layer
 turns that silent statistical signal into an automated operational response.
 
-![Live portal — CI-breach alert + automated LLM tactical brief](image/forecast_guard_ai_brief.png)
-*Live Streamlit portal: observed demand of 220 trips/hr breaches the SARIMA 95% upper bound (140) by +120%, and the zero-shot LLM chain instantly writes a grounded Markdown brief — surge strategy, vehicle tier allocation, and fleet deployment referencing the exact breach numbers.*
+![Deployed app — CI-breach alert + automated LLM tactical brief (Groq · gpt-oss-120b)](image/forecast_guard_live_demo.png)
+*Live Hugging Face Space: observed demand of 220 trips/hr breaches the SARIMA 95% upper bound (140) by +120%, and the zero-shot LLM chain instantly writes a grounded Markdown brief — surge strategy, vehicle tier allocation, and fleet deployment referencing the exact breach numbers. The local Streamlit portal (`streamlit run app_ops.py`) exposes the same logic; inside the band, the LLM never fires.*
 
 ```
 SARIMA forecast (band) ──► observed demand ──► breach?
