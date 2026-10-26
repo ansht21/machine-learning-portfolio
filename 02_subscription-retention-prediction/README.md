@@ -4,6 +4,8 @@
 > — real RF classifier (**ROC-AUC 0.839**) + ChromaDB RAG + Groq LLM generating retention offers, running free-tier.
 > Direct app: https://ansht11-retention-gateway-api.hf.space
 
+![AI Retention Gateway live demo](image/retention_gateway_live_demo.png)
+
 **Business problem:** A subscription business (real-world telco data, 7,043 customers) is
 losing ~26% of customers. Which customers leave, why, and what does the revenue at risk
 look like?
