@@ -1,10 +1,21 @@
 """Churn scoring API. Run: uvicorn app.main:app --reload (needs models/churn_model.pkl)."""
+import logging
+import time
+import uuid
 from pathlib import Path
+
 import joblib
 import os
 import pandas as pd
 from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='{"time": "%(asctime)s", "level": "%(levelname)s", "logger": "%(name)s", "message": "%(message)s"}',
+    datefmt="%Y-%m-%dT%H:%M:%SZ"
+)
+logger = logging.getLogger("churn_api")
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_PATH = ROOT / "models" / "churn_model.pkl"
@@ -51,7 +62,11 @@ def health():
 
 @app.post("/predict")
 def predict(c: CustomerFeatures):
+    request_id = str(uuid.uuid4())[:8]
+    t0 = time.perf_counter()
     row_dict, proba, thr, band, _ = _score(c)
+    latency_ms = round((time.perf_counter() - t0) * 1000, 1)
+    logger.info(f"predict request_id={request_id} risk_band={band} churn_prob={round(proba, 4)} latency_ms={latency_ms}")
     return {"churn_probability": round(proba, 4),
             "predicted_churn": bool(proba >= thr),
             "risk_band": band, "threshold": round(thr, 4)}
@@ -89,6 +104,8 @@ def predict_v2(c: CustomerFeatures, request: Request):
               profiles + a LangChain chain producing a strict-JSON retention
               offer (Pydantic-validated). Degrades gracefully without a key.
     """
+    request_id = str(uuid.uuid4())[:8]
+    t0 = time.perf_counter()
     row_dict, proba, thr, band, _ = _score(c)
     response = {
         "churn_probability": round(proba, 4),
@@ -101,12 +118,18 @@ def predict_v2(c: CustomerFeatures, request: Request):
     # own documented band — and is overridable via the AI_TRIGGER_BAND env var.
     trigger_bands = os.getenv("AI_TRIGGER_BAND", "Medium,High").split(",")
     if band not in trigger_bands:
+        latency_ms = round((time.perf_counter() - t0) * 1000, 1)
+        genai_fired = False
+        logger.info(f"predict_v2 request_id={request_id} risk_band={band} churn_prob={round(proba, 4)} genai_fired={genai_fired} latency_ms={latency_ms}")
         response["ai_retention_intervention"] = None
         response["genai_note"] = "No AI offer generated: risk band is " + band
         return response
 
     genai = getattr(request.app.state, "genai", None)
     if genai is None or not genai["generator"].configured or not genai["index"].ready:
+        latency_ms = round((time.perf_counter() - t0) * 1000, 1)
+        genai_fired = False
+        logger.info(f"predict_v2 request_id={request_id} risk_band={band} churn_prob={round(proba, 4)} genai_fired={genai_fired} latency_ms={latency_ms}")
         response["ai_retention_intervention"] = None
         response["genai_note"] = (
             "GenAI layer unavailable (vector index or API key missing). "
@@ -121,6 +144,9 @@ def predict_v2(c: CustomerFeatures, request: Request):
     except Exception as e:
         response["ai_retention_intervention"] = None
         response["genai_error"] = f"GenAI generation failed: {e}"
+    latency_ms = round((time.perf_counter() - t0) * 1000, 1)
+    genai_fired = band in trigger_bands and genai is not None
+    logger.info(f"predict_v2 request_id={request_id} risk_band={band} churn_prob={round(proba, 4)} genai_fired={genai_fired} latency_ms={latency_ms}")
     return response
 
 

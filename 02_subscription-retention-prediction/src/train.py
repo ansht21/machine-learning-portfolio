@@ -19,7 +19,8 @@ except ImportError:
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.config import DATA, MODELS_DIR, OUTPUTS_DIR, RANDOM_STATE
 from src.data_processing import load_and_clean
-from src.modeling import make_splits, fit_models, evaluate, cross_validate, optimize_threshold
+from src.modeling import (make_splits, fit_models, evaluate, cross_validate,
+                          optimize_threshold, plot_threshold_analysis, HAS_XGB)
 
 MODELS_DIR.mkdir(exist_ok=True)
 OUTPUTS_DIR.mkdir(exist_ok=True)
@@ -31,15 +32,20 @@ if HAS_MLFLOW:
 def main():
     df = load_and_clean(DATA)
     splits = make_splits(df)
-    run = mlflow.start_run(run_name="logreg-vs-rf") if HAS_MLFLOW else None
+    run = mlflow.start_run(run_name="logreg-vs-rf-vs-xgb") if HAS_MLFLOW else None
     try:
         if HAS_MLFLOW:
             mlflow.log_param("test_size", 0.2)
             mlflow.log_param("random_state", RANDOM_STATE)
         models = fit_models(splits)
         rows = []
-        for name, key, scaled in [("Logistic Regression", "Logistic Regression", True),
-                                  ("Random Forest", "Random Forest", False)]:
+        eval_targets = [
+            ("Logistic Regression", "Logistic Regression", True),
+            ("Random Forest", "Random Forest", False),
+        ]
+        if HAS_XGB and "XGBoost" in models:
+            eval_targets.append(("XGBoost", "XGBoost", False))
+        for name, key, scaled in eval_targets:
             m = evaluate(name, models[key], splits["X_test"], splits["y_test"],
                          scaled=scaled, scaler=models["scaler"])
             if HAS_MLFLOW:
@@ -52,6 +58,16 @@ def main():
         pd.DataFrame(rows).to_csv(OUTPUTS_DIR / "churn_model_metrics.csv", index=False)
         prob = models["Random Forest"].predict_proba(splits["X_test"])[:, 1]
         thr = optimize_threshold(splits["y_test"].values, prob)
+
+        # Generate threshold analysis plot
+        image_dir = OUTPUTS_DIR.parent / "image"
+        image_dir.mkdir(exist_ok=True)
+        plot_threshold_analysis(
+            splits["y_test"].values,
+            prob,
+            image_dir / "threshold_analysis.png"
+        )
+
         bundle = {"model": models["Random Forest"], "columns": splits["columns"],
                   "threshold": thr["cost_optimal"], "high_risk": 0.7, "medium_risk": 0.4}
         joblib.dump(bundle, MODELS_DIR / "churn_model.pkl")

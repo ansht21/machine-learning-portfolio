@@ -1,4 +1,6 @@
-﻿# Ride Demand and Revenue Forecasting
+# Ride Demand and Revenue Forecasting
+
+> **⚠️ Data Note:** This project uses a synthetic dataset (35,000 trips, uniform monthly volume, 5 pickup zones) generated for portfolio demonstration. The workflow, modelling techniques, and GenAI integration are the deliverables — not real Uber metrics. See the modelling section for results that would transfer to production data.
 
 ![Uber Trip Analysis Dashboard](image/PowerBi_Dashboard.png)
 *Demand is not spread evenly across the day â€" a single evening spike drives the business. The hourly bars show ~350 trips at 3 AM against 4,053 at 6 PM.*
@@ -11,10 +13,6 @@
 
 **Business problem:** A ride-hailing operator needs to know *when* to surge-price, *where*
 to position premium vehicles, and *which* fleet tier to grow â€" using 35,000 trip records.
-
-> â„¹ *Data note: this is a simulated dataset (uniform monthly volume, 5 pickup zones).
-> The workflow and analytical techniques are the deliverable, not real Uber metrics.
-> Fares are in â‚¹ (INR) â€" the dataset uses Indian payment methods including UPI.*
 
 ---
 
@@ -63,6 +61,17 @@ SARIMA forecast (band) ──► observed demand ──► breach?
   a static advisory document without any key
 - `app_ops.py` is the Streamlit operations portal: set observed vs expected
   demand, see the variance metrics and the AI brief the moment the band breaks
+
+## 🧪 LLM Reliability & Eval (`eval_llm.py`)
+
+LLM outputs are tested against a golden set of 5 cases covering anomaly detection logic, graceful degradation (no API key), and output format validation. Run without any API key — the eval covers both the statistical gate and the no-key fallback path.
+
+```bash
+python eval_llm.py
+# Expected: 5/5 tests passed
+```
+
+This separates "I used an LLM" from "I tested my LLM feature."
 
 ---
 
@@ -144,13 +153,14 @@ Python-driven exploration of cleaned trip data including:
 
 *Predictive layer built on the 35,000-trip dataset (EDA/dashboard layer lives in the Data Analytics repo). All figures below are produced by `Forecast_Clustering_Analysis.ipynb`.*
 
-### Model scorecard
+### Model scorecard & baseline comparison
 
-| Model | Task | Metric |
-|---|---|---|
-| SARIMA | 14-day demand forecast | **MAPE 8.3%** â€” the forecast tracks actuals within single digits |
-| Random Forest | Route-level fare prediction | **RÂ² 0.972** â€” distance/time features explain nearly all fare variance |
-| K-Means | Demand-cell clustering | Pickup cells grouped into demand profiles (`outputs/demand_cluster_cells.csv`) |
+| Model | Task | Metric | vs Baseline |
+|---|---|---|---|
+| Seasonal Naive | Demand forecast (baseline) | MAE 9.5 · MAPE ~10% | — |
+| **SARIMA** | **14-day demand forecast** | **MAE 7.6 · RMSE 9.6 · MAPE 8.3%** | **~20% MAE improvement** |
+| Random Forest | Route-level fare prediction | R² 0.972 | — |
+| K-Means | Demand-cell clustering | Silhouette 0.675 (k=2) | — |
 
 ### Chart-by-chart walkthrough
 
