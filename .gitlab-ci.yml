@@ -1,4 +1,4 @@
-# CI: run the churn project's test suite on every push / merge request.
+# CI: run the churn project's test suite + API smoke test on every push.
 # Gates: feature-contract, scoring, graceful-degradation tests must pass
 # before anything reaches main (and the deployed HF Space).
 stages:
@@ -7,12 +7,6 @@ stages:
 churn-tests:
   stage: test
   image: python:3.12-slim
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH
-  changes:
-    - 02_subscription-retention-prediction/**/*
-    - .gitlab-ci.yml
   before_script:
     - pip install --quiet pandas numpy scikit-learn joblib pytest fastapi uvicorn pydantic
   script:
@@ -23,4 +17,4 @@ churn-tests:
   artifacts:
     when: always
     reports:
-      junit: 02_subscription-retention-prediction/pytest-results.xml
+      junit: pytest-results.xml
