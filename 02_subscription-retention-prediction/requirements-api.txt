@@ -12,3 +12,5 @@ sentence-transformers>=2.7
 langchain-core>=0.3
 langchain-community>=0.3
 langchain-openai>=0.2
+evidently>=0.4
+

@@ -1,13 +1,20 @@
-"""Leakage-safe feature engineering (same as notebook)."""
+"""Leakage-safe feature engineering (same as notebook).
+
+The `avg_monthly` aggregate uses the TRAINING mean only (passed by
+make_splits/train.py) so that batch statistics never leak from evaluation
+data, and the API can reproduce the exact same feature from the value
+persisted in the model bundle.
+"""
 import pandas as pd
 from src.config import CATEGORICALS, NUMERICS
 
 
-def build_features(df: pd.DataFrame) -> pd.DataFrame:
+def build_features(df: pd.DataFrame, avg_monthly: float | None = None) -> pd.DataFrame:
     X = df.copy()
     X["charge_ratio"] = X["TotalCharges"] / (X["tenure"] + 1)
     X["tenure_x_monthly"] = X["tenure"] * X["MonthlyCharges"]
-    avg_monthly = X["MonthlyCharges"].mean()
+    if avg_monthly is None:
+        avg_monthly = X["MonthlyCharges"].mean()
     X["monthly_above_avg"] = (X["MonthlyCharges"] > avg_monthly).astype(int)
     feat_cols = CATEGORICALS + NUMERICS + ["charge_ratio",
                                            "tenure_x_monthly",

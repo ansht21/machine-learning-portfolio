@@ -32,6 +32,12 @@ set GROQ_API_KEY=<free key — https://console.groq.com>   # optional
 streamlit run app_ops.py --server.port 8502
 ```
 
+> **Honest scoping:** `app_ops.py` is a *manual-input demo* — you supply the SARIMA
+> outputs (expected demand + 95% upper bound) and observed demand; the SARIMA model
+> itself is trained in `Forecast_Clustering_Analysis.ipynb`, which forecasts
+> **daily** demand, while the portal displays operations figures at the **hourly**
+> level. Wiring the trained model into the portal live is the next milestone.
+
 ---
 
 ## 🤖 GenAI Forecast Guard (`forecast_guard.py` + `app_ops.py`)
@@ -157,10 +163,12 @@ Python-driven exploration of cleaned trip data including:
 
 | Model | Task | Metric | vs Baseline |
 |---|---|---|---|
-| Seasonal Naive | Demand forecast (baseline) | MAE 9.5 · MAPE ~10% | — |
-| **SARIMA** | **14-day demand forecast** | **MAE 7.6 · RMSE 9.6 · MAPE 8.3%** | **~20% MAE improvement** |
+| Seasonal Naive | Demand forecast (baseline) | MAE 9.9 · MAPE 10.4% · WAPE 10.3% (FAIR fixed multi-step) | — |
+| **SARIMA** | **14-day demand forecast** | **MAE 7.6 · RMSE 9.6 · MAPE 8.3% · WAPE 8.0%** | **~21% MAPE / ~22% WAPE improvement** |
 | Random Forest | Route-level fare prediction | R² 0.972 | — |
 | K-Means | Demand-cell clustering | Silhouette 0.675 (k=2) | — |
+
+*Baseline is a FAIR fixed multi-step seasonal-naive — the last 7 training days tiled over the identical test horizon (no within-test actuals revealed); zero-demand days are excluded from MAPE denominators.*
 
 ### Chart-by-chart walkthrough
 
@@ -249,7 +257,7 @@ the fare model lives in [`UberTripAnalysis.ipynb`](./UberTripAnalysis.ipynb).
 
 ### 1 Â· Daily Demand Forecasting (SARIMA)
 * Weekly-seasonal SARIMA(1,1,1)(1,0,1,7) trained on Janâ€“Oct, validated on a held-out Novâ€“Dec test window.
-* **Held-out results: MAE 7.6 Â· RMSE 9.6 Â· MAPE 8.3%** â€” a **~20% error reduction vs the seasonal-naive baseline (MAE 9.5)**.
+* **Held-out results: MAE 7.6 · RMSE 9.6 · MAPE 8.3% · WAPE 8.0%** — a **~21% MAPE / ~22% WAPE error reduction vs the FAIR seasonal-naive baseline (fixed multi-step, last training week tiled over the identical test horizon: MAPE 10.4%)**; zero-demand days are excluded from MAPE denominators.
 * Refit on all data to produce a 14-day operational forecast with 95% confidence intervals.
 * **Residual diagnostics:** residual mean âˆ’1.57 (â‰ˆunbiased); **Ljung-Box p = 0.54 (lag 7) / 0.86 (lag 14)** â†’ no leftover autocorrelation; ACF + Q-Q plots in [`image/forecast_residuals.png`](image/forecast_residuals.png). The model captures the available structure â€” not just a good score on one metric.
 

@@ -68,7 +68,24 @@ class RetentionVectorIndex:
 
     @property
     def ready(self) -> bool:
-        return DB_PATH.exists() and DATA_PATH.exists()
+        """True only when the Chroma index folder exists AND contains records.
+
+        An empty index directory can be left behind when the build step was
+        interrupted; treat it as not-ready so the API degrades predictably
+        (500-ready note on /predict/v2 instead of empty retrieval).
+        """
+        if not (DB_PATH.exists() and DATA_PATH.exists()):
+            return False
+        try:
+            return self.count() > 0
+        except Exception:
+            return False
+
+    def count(self) -> int:
+        try:
+            return self._open()._collection.count()  # noqa: SLF001
+        except Exception:
+            return 0
 
     def _open(self):
         if self._db is None:

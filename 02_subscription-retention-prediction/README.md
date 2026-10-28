@@ -1,5 +1,8 @@
 ﻿# Subscription Retention Prediction
 
+[![CI status](https://gitlab.com/ansht_121/Data-Science-Project/badges/main/pipeline.svg)](https://gitlab.com/ansht_121/Data-Science-Project/-/pipelines?scope=test&ref=main)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![License](https://img.shields.io/badge/license-MIT-green)
+
 ![Churn Dashboard](image/Churn_Dashboard_screenshot.png)
 *Executive Excel dashboard — KPI cards + four native charts (contract, tenure, internet service, revenue-at-risk).*
 
@@ -309,7 +312,32 @@ All charts are saved to `image/` and analysis tables to `outputs/` by the notebo
 
 ---
 
-## 🛠️ Tech Stack & Deployment
+## 🔬 MLOps (experiment tracking, CI, drift monitoring)
+
+```bash
+# 1) Train with MLflow tracking + registry (runs, params, metrics, churn-rf versions)
+python src/train.py
+
+# Inspect locally:  mlflow ui --backend-store-uri ./mlruns
+# -> compare runs (LogReg vs RF), and see model registry versions of `churn-rf`
+
+# 2) CI: the pytest suite runs on every push via .gitlab-ci.yml (repo root)
+#    -> green badge above = suite passing before any change reaches main
+
+# 3) Data-drift report (reference window vs recent batch)
+python src/drift_report.py
+# -> outputs/churn_drift_report.html  (interactive Evidently report)
+#    outputs/churn_drift_summary.json (drifted columns + share drifted)
+#    with real live traffic: python src/drift_report.py --current live_batch.csv
+```
+
+**Why it matters:** `mlruns/` + `outputs/churn_drift_report.html` are the answers to the two
+standard production questions — *"which run produced the deployed model?"* and *"is the
+live input distribution still the one the model was trained on?"*
+
+---
+
+## 🛠 Tech Stack & Deployment
 
 | Layer | Technology |
 |---|---|
@@ -319,6 +347,7 @@ All charts are saved to `image/` and analysis tables to `outputs/` by the notebo
 | **UI** | Streamlit dashboard; Gradio Blocks on the hosted demo |
 | **Containers** | Docker multi-stage build (MLflow + XGBoost artifacts included), docker-compose (API + UI stack) |
 | **Testing** | pytest suite (scoring, feature contract, graceful degradation without API key) |
+| **MLOps** | MLflow experiment tracking (params/metrics per run), model registry (`churn-rf` versions), **GitLab CI** (pytest suite gates every push), **Evidently** data-drift reporting (train vs current-batch, HTML report in `outputs/`) |
 | **Cloud deployment** | **Hugging Face Spaces** (Gradio SDK, ZeroGPU free tier) — [live demo](https://huggingface.co/spaces/ansht11/retention-gateway-api) |
 | **DevOps** | Git/GitLab, CI-style reproducible pipeline (`src/train.py`), secrets via managed Space settings (never in code), Git LFS for model/vector-index artifacts |
 

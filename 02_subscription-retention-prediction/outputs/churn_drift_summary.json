@@ -1,0 +1,41 @@
+{
+  "drifted_columns": [
+    {
+      "column": "tenure,method=Wasserstein distance (normed),threshold=0.1",
+      "score": 0.0239
+    },
+    {
+      "column": "MonthlyCharges,method=Wasserstein distance (normed),threshold=0.1",
+      "score": 0.0115
+    },
+    {
+      "column": "TotalCharges,method=Wasserstein distance (normed),threshold=0.1",
+      "score": 0.0223
+    },
+    {
+      "column": "Contract,method=Jensen-Shannon distance,threshold=0.1",
+      "score": 0.0108
+    },
+    {
+      "column": "InternetService,method=Jensen-Shannon distance,threshold=0.1",
+      "score": 0.0077
+    },
+    {
+      "column": "PaymentMethod,method=Jensen-Shannon distance,threshold=0.1",
+      "score": 0.0092
+    },
+    {
+      "column": "OnlineSecurity,method=Jensen-Shannon distance,threshold=0.1",
+      "score": 0.0083
+    },
+    {
+      "column": "TechSupport,method=Jensen-Shannon distance,threshold=0.1",
+      "score": 0.0134
+    },
+    {
+      "column": "PaperlessBilling,method=Jensen-Shannon distance,threshold=0.1",
+      "score": 0.0044
+    }
+  ],
+  "share_drifted": 1.0
+}

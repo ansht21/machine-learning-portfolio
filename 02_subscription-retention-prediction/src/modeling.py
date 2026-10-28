@@ -22,13 +22,31 @@ from src.data_processing import load_and_clean
 from src.feature_engineering import build_features
 
 
-def make_splits(df: pd.DataFrame, test_size=0.2):
-    X = build_features(df)
+def make_splits(df: pd.DataFrame, val_size=0.2, test_size=0.2):
+    """Stratified 3-way split: train (60%) / validation (20%) / test (20%).
+
+    The threshold is later selected on VALIDATION only; test stays untouched
+    until final reporting. Feature encoding runs on the full table (so all
+    splits share identical dummy columns), while the only aggregate feature
+    (`monthly_above_avg`) uses the TRAINING mean — no leakage.
+    """
     y = df[TARGET]
-    Xtr, Xte, ytr, yte = train_test_split(
-        X, y, test_size=test_size, random_state=RANDOM_STATE, stratify=y)
-    return {"X_train": Xtr, "X_test": Xte, "y_train": ytr, "y_test": yte,
-            "columns": list(X.columns)}
+    train_idx, tmp_idx = train_test_split(
+        df.index, test_size=val_size + test_size,
+        random_state=RANDOM_STATE, stratify=y)
+    val_idx, test_idx = train_test_split(
+        tmp_idx, test_size=test_size / (val_size + test_size),
+        random_state=RANDOM_STATE, stratify=y.loc[tmp_idx])
+    avg_monthly = float(df.loc[train_idx, "MonthlyCharges"].mean())
+    X = build_features(df, avg_monthly=avg_monthly)
+    splits = {
+        "X_train": X.loc[train_idx], "y_train": y.loc[train_idx],
+        "X_val": X.loc[val_idx], "y_val": y.loc[val_idx],
+        "X_test": X.loc[test_idx], "y_test": y.loc[test_idx],
+        "columns": list(X.columns),
+        "monthly_charges_avg": avg_monthly,
+    }
+    return splits
 
 
 def fit_models(splits: dict):

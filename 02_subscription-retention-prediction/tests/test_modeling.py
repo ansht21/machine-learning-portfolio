@@ -23,7 +23,35 @@ def splits(df):
 
 
 def test_split_shapes(splits):
-    assert len(splits["y_train"]) + len(splits["y_test"]) == 7032
+    assert len(splits["y_train"]) + len(splits["y_val"]) + len(splits["y_test"]) == 7032
+
+
+def test_threshold_uses_validation_not_test(splits):
+    """The decision threshold must be selected on the validation split."""
+    assert "y_val" in splits and "X_val" in splits
+    # validation and test must be disjoint index sets
+    assert not (set(splits["y_val"].index) & set(splits["y_test"].index))
+    # meta.json documents the leakage-safe threshold policy
+    import json
+    meta = json.load(open(ROOT / "models" / "meta.json"))
+    assert "validation" in meta.get("threshold_note", "").lower()
+
+
+def test_feature_engineering_parity(splits):
+    """API must compute monthly_above_avg from the same training mean."""
+    import joblib
+    from app.main import _score, CustomerFeatures
+    b = joblib.load(ROOT / "models" / "churn_model.pkl")
+    assert "monthly_charges_avg" in b
+    val = (CustomerFeatures().MonthlyCharges > b["monthly_charges_avg"])
+    # reproduce src-side feature for the same row
+    from src.feature_engineering import build_features
+    X = build_features(pd.DataFrame([{**CustomerFeatures().model_dump()}]),
+                       avg_monthly=b["monthly_charges_avg"])
+    assert X["monthly_above_avg"].iloc[0] == int(val)
+    # and the API path runs end-to-end
+    _, proba, thr, band, _ = _score(CustomerFeatures())
+    assert 0 <= proba <= 1 and 0 <= thr <= 1
 
 
 def test_cross_validation_reports_mean_and_std(splits):

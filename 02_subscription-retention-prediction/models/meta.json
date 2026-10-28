@@ -1,6 +1,12 @@
 {
   "final_model": "Random Forest",
-  "threshold": 0.16999999999999998,
-  "high_risk": 0.7,
-  "medium_risk": 0.4
+  "threshold": 0.14999999999999997,
+  "threshold_note": "decision threshold selected on the VALIDATION split by cost optimization (fp=1, fn=5); the test split is only used for final reported metrics",
+  "risk_bands": {
+    "note": "bands are descriptive severity tiers used by the API/UI and the AI offer trigger, independent of the binary decision threshold",
+    "high_risk": 0.7,
+    "medium_risk": 0.4
+  },
+  "monthly_charges_avg": 64.80698032709174,
+  "splits": "60/20/20 train/val/test (stratified)"
 }

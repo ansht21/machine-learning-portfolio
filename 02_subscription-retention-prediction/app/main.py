@@ -79,7 +79,9 @@ def _score(c: "CustomerFeatures"):
     row = pd.DataFrame([{**c.model_dump()}])
     row["charge_ratio"] = row["TotalCharges"] / (row["tenure"] + 1)
     row["tenure_x_monthly"] = row["tenure"] * row["MonthlyCharges"]
-    row["monthly_above_avg"] = 0
+    # same aggregate feature as training (leakage-safe): computed from the
+    # TRAINING-set mean persisted in the bundle — identical to src/train.py
+    row["monthly_above_avg"] = (row["MonthlyCharges"] > b["monthly_charges_avg"]).astype(int)
     cats = ["gender", "Partner", "Dependents", "PhoneService", "MultipleLines",
             "InternetService", "OnlineSecurity", "OnlineBackup", "DeviceProtection",
             "TechSupport", "StreamingTV", "StreamingMovies", "Contract",

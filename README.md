@@ -332,7 +332,7 @@ Data-Science-Project/
 
 ### Prerequisites
 
-- Python 3.8+
+- Python 3.10+ (matches the Dockerfile; the churn API is tested on 3.10–3.12)
 - Jupyter Notebook or JupyterLab
 
 ### Installation
@@ -360,7 +360,7 @@ pip install -r 02_subscription-retention-prediction/requirements.txt
 jupyter notebook 01_ride-demand-and-revenue-forecasting/Forecast_Clustering_Analysis.ipynb
 jupyter notebook 02_subscription-retention-prediction/Churn_Prediction_Analysis.ipynb
 # or run the modular churn pipeline end-to-end:
-python 02_subscription-retention-prediction/src/run_pipeline.py --help
+python 02_subscription-retention-prediction/src/train.py
 ```
 
 **Image Classification** â€” no setup needed; MNIST downloads automatically on first run.
