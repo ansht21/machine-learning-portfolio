@@ -1,4 +1,4 @@
-﻿# Sentiment Analysis â€” Tweet Classification
+﻿# Sentiment Analysis — Tweet Classification
 
 Professional NLP pipeline for tweet sentiment classification using TF-IDF and Logistic Regression.
 

@@ -1,4 +1,4 @@
-﻿# Image Classification â€” Handwritten Digit Recognition
+﻿# Image Classification — Handwritten Digit Recognition
 
 > Professional TensorFlow/Keras CNN for MNIST handwritten digit recognition.
 
@@ -36,7 +36,7 @@
 
 ## Problem Statement
 
-Recognise handwritten digits (0â€“9) from the MNIST dataset â€” a foundational computer vision task with applications in postal automation, cheque processing, and form recognition.
+Recognise handwritten digits (0–9) from the MNIST dataset — a foundational computer vision task with applications in postal automation, cheque processing, and form recognition.
 
 ---
 
@@ -101,10 +101,10 @@ save_model(model, "models/mnist_cnn.h5")
 
 **Algorithm**: Convolutional Neural Network (CNN)  
 **Architecture**:
-- Conv2D(32, 3Ã—3, ReLU) â†’ MaxPooling2D(2Ã—2)
-- Conv2D(64, 3Ã—3, ReLU) â†’ MaxPooling2D(2Ã—2)
-- Conv2D(64, 3Ã—3, ReLU)
-- Flatten â†’ Dense(64, ReLU) â†’ Dropout(0.5) â†’ Dense(10, Softmax)
+- Conv2D(32, 3×3, ReLU) → MaxPooling2D(2×2)
+- Conv2D(64, 3×3, ReLU) → MaxPooling2D(2×2)
+- Conv2D(64, 3×3, ReLU)
+- Flatten → Dense(64, ReLU) → Dropout(0.5) → Dense(10, Softmax)
 
 **Why CNN for MNIST?**
 - Spatial hierarchies: CNNs excel at capturing local patterns (edges, curves) and combining them into complex features
@@ -166,11 +166,11 @@ This indicates the model achieves 98.83% accuracy on the MNIST test set.
 
 ## Data Requirements
 
-No manual download required â€” the MNIST dataset is automatically fetched and cached by TensorFlow/Keras on first run.
+No manual download required — the MNIST dataset is automatically fetched and cached by TensorFlow/Keras on first run.
 
 The dataset consists of:
-- **Training set**: 60,000 grayscale images (28Ã—28 pixels)
-- **Test set**: 10,000 grayscale images (28Ã—28 pixels)
+- **Training set**: 60,000 grayscale images (28×28 pixels)
+- **Test set**: 10,000 grayscale images (28×28 pixels)
 - **Labels**: Integers from 0 to 9 representing the digit shown
 
 ---

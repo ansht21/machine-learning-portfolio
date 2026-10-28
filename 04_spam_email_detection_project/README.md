@@ -16,8 +16,8 @@
 
 Spam filtering is the textbook example of an **asymmetric-cost classification problem**. The two error types are not equally bad:
 
-- **False negative** (spam reaches the inbox) â€” mildly annoying, the user deletes it
-- **False positive** (legitimate mail marked spam) â€” potentially serious; a missed job offer or invoice sits unseen in a spam folder
+- **False negative** (spam reaches the inbox) — mildly annoying, the user deletes it
+- **False positive** (legitimate mail marked spam) — potentially serious; a missed job offer or invoice sits unseen in a spam folder
 
 That asymmetry should shape how the model is tuned: precision on the "spam" class matters more than recall, because being wrong about legitimate mail is the costlier mistake.
 
@@ -27,25 +27,25 @@ That asymmetry should shape how the model is tuned: precision on the "spam" clas
 
 ```
 Raw email text
-  â†“ Data cleaning â€” remove nulls and duplicates
-  â†“ Text preprocessing (NLTK)
-  â†“ TF-IDF vectorisation
-  â†“ Logistic Regression classifier
-  â†“ Evaluate on held-out test set
+  ↓ Data cleaning — remove nulls and duplicates
+  ↓ Text preprocessing (NLTK)
+  ↓ TF-IDF vectorisation
+  ↓ Logistic Regression classifier
+  ↓ Evaluate on held-out test set
 ```
 
 ### Why TF-IDF over raw word counts
 
-**TF-IDF** (Term Frequencyâ€“Inverse Document Frequency) weights each word by how distinctive it is:
+**TF-IDF** (Term Frequency–Inverse Document Frequency) weights each word by how distinctive it is:
 
-- Words appearing in *every* email ("the", "and", "to") get near-zero weight â€” no discriminative signal
+- Words appearing in *every* email ("the", "and", "to") get near-zero weight — no discriminative signal
 - Words concentrated in one class ("winner", "unsubscribe", "claim") get high weight
 
 A raw `CountVectorizer` would treat "the" appearing 40 times as a strong feature. TF-IDF correctly recognises it as noise. This is why TF-IDF is the standard baseline for text classification.
 
 ### Why Logistic Regression
 
-For high-dimensional sparse text features, logistic regression trains fast, resists overfitting with proper regularisation, and â€” importantly â€” is **interpretable**. The learned coefficients show exactly which words push a message toward "spam", which matters when a user asks why their email was filtered.
+For high-dimensional sparse text features, logistic regression trains fast, resists overfitting with proper regularisation, and — importantly — is **interpretable**. The learned coefficients show exactly which words push a message toward "spam", which matters when a user asks why their email was filtered.
 
 ---
 
@@ -58,11 +58,11 @@ For high-dimensional sparse text features, logistic regression trains fast, resi
 
 ### Interpretation
 
-**Test accuracy slightly exceeds training accuracy.** That's a healthy signal â€” the model has *not* memorised the training set. Overfitting shows the opposite pattern: high training accuracy with a marked drop on unseen data.
+**Test accuracy slightly exceeds training accuracy.** That's a healthy signal — the model has *not* memorised the training set. Overfitting shows the opposite pattern: high training accuracy with a marked drop on unseen data.
 
 Near-identical scores across both splits indicate the model found genuinely generalisable patterns in spam vocabulary rather than artefacts of the training sample.
 
-> **Caveat worth stating:** accuracy alone is incomplete here. Given the asymmetric costs above, a full evaluation would report the confusion matrix and per-class precision/recall â€” specifically how many legitimate emails were wrongly flagged. That number determines whether the filter is safe to deploy.
+> **Caveat worth stating:** accuracy alone is incomplete here. Given the asymmetric costs above, a full evaluation would report the confusion matrix and per-class precision/recall — specifically how many legitimate emails were wrongly flagged. That number determines whether the filter is safe to deploy.
 
 ---
 
@@ -79,10 +79,10 @@ jupyter notebook spam_email_detection.ipynb
 
 ## Next Steps
 
-- **Report the confusion matrix** â€” given asymmetric costs, the false-positive count is the metric that actually matters
-- **Threshold tuning** â€” raise the spam decision threshold to trade recall for precision, protecting legitimate mail
-- **Benchmark Multinomial Naive Bayes** â€” the classic spam-detection baseline, worth comparing against this implementation
-- **Feature inspection** â€” surface the highest-weighted spam indicators to sanity-check what the model learned
+- **Report the confusion matrix** — given asymmetric costs, the false-positive count is the metric that actually matters
+- **Threshold tuning** — raise the spam decision threshold to trade recall for precision, protecting legitimate mail
+- **Benchmark Multinomial Naive Bayes** — the classic spam-detection baseline, worth comparing against this implementation
+- **Feature inspection** — surface the highest-weighted spam indicators to sanity-check what the model learned
 
 ---
 

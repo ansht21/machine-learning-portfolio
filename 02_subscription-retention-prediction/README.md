@@ -168,10 +168,10 @@ structural, not sampling noise:
 
 | Driver | Test | Statistic | p-value | Effect size |
 |---|---|---|---|---|
-| Contract type | Chi-square | chi2 = 1179.5 | < 0.001 | CramÃ©r's V 0.41 (medium-large) |
-| Internet service | Chi-square | chi2 = 728.7 | < 0.001 | CramÃ©r's V 0.32 |
-| Payment method | Chi-square | chi2 = 645.4 | < 0.001 | CramÃ©r's V 0.30 |
-| Online security | Chi-square | chi2 = 846.7 | < 0.001 | CramÃ©r's V 0.35 |
+| Contract type | Chi-square | chi2 = 1179.5 | < 0.001 | Cramér's V 0.41 (medium-large) |
+| Internet service | Chi-square | chi2 = 728.7 | < 0.001 | Cramér's V 0.32 |
+| Payment method | Chi-square | chi2 = 645.4 | < 0.001 | Cramér's V 0.30 |
+| Online security | Chi-square | chi2 = 846.7 | < 0.001 | Cramér's V 0.35 |
 | Tenure (churned vs kept) | Welch's t | t = -34.97 | < 0.001 | Cohen's d -0.86 (large) |
 | Monthly charges | Welch's t | t = 18.34 | < 0.001 | Cohen's d 0.44 |
 | Total charges | Welch's t | t = -18.80 | < 0.001 | Cohen's d -0.46 |
@@ -189,7 +189,7 @@ structural, not sampling noise:
 | Monthly revenue at risk (churned) | $139.1K |
 | Avg tenure | 32.4 months |
 
-### KPI Handbook â€” what each headline number means
+### KPI Handbook — what each headline number means
 
 | KPI | Value | Definition |
 |---|---|---|
@@ -198,24 +198,24 @@ structural, not sampling noise:
 | Avg Tenure | **32.4 months** | Mean months with the provider |
 | Revenue at Risk | **$139.1K** | Sum of `MonthlyCharges` over churned customers |
 | Model Accuracy | **80.0%** | Held-out accuracy (LogReg + Random Forest) |
-| Model ROC-AUC | **0.839** | Held-out ranking quality â€” the model reliably scores would-be churners above stayers |
+| Model ROC-AUC | **0.839** | Held-out ranking quality — the model reliably scores would-be churners above stayers |
 
 ### Chart-by-chart walkthrough
 
-**Confusion Matrix + ROC Curve** â€” the model evaluation pair: the confusion matrix shows where errors concentrate (false positives = wasted retention offers, false negatives = lost customers), and the ROC curve (AUC 0.839) shows strong separation well above the 0.5 diagonal. Threshold choice is a business call: lower it to catch more churners when retention offers are cheap, raise it when offers are expensive.
+**Confusion Matrix + ROC Curve** — the model evaluation pair: the confusion matrix shows where errors concentrate (false positives = wasted retention offers, false negatives = lost customers), and the ROC curve (AUC 0.839) shows strong separation well above the 0.5 diagonal. Threshold choice is a business call: lower it to catch more churners when retention offers are cheap, raise it when offers are expensive.
 
 ![Confusion Matrix & ROC](image/churn_cm_roc.png)
 
-**Churn Drivers (feature importance)** â€” the explainability view: contract type, tenure band and internet service dominate the model, matching the EDA findings (42.7% month-to-month churn, 53.3% 0â€“6m churn). The model rediscovers the business logic independently, which is why stakeholders trust its ranked customer list.
+**Churn Drivers (feature importance)** — the explainability view: contract type, tenure band and internet service dominate the model, matching the EDA findings (42.7% month-to-month churn, 53.3% 0–6m churn). The model rediscovers the business logic independently, which is why stakeholders trust its ranked customer list.
 
 ![Churn Drivers](image/churn_drivers.png)
 
-**Churn by Contract / Tenure / Service** â€” the EDA foundation the model stands on: 42.7% vs 11.3% vs 2.8% by contract, 53.3% â†’ 9.5% across tenure bands, fiber as the highest-risk service. Full per-chart explanations live in the analytics layer.
+**Churn by Contract / Tenure / Service** — the EDA foundation the model stands on: 42.7% vs 11.3% vs 2.8% by contract, 53.3% → 9.5% across tenure bands, fiber as the highest-risk service. Full per-chart explanations live in the analytics layer.
 
 ![Churn by Contract](image/churn_by_contract.png)
 ![Churn by Tenure](image/churn_by_tenure.png)
 
-**Revenue-at-Risk Segments** â€” M2M + Fiber â‰ˆ $100K of the $139K total exposure (~72%). The model's output is this ranked segment/customer list (`outputs/churn_segment_revenue.csv`), not an accuracy trophy.
+**Revenue-at-Risk Segments** — M2M + Fiber ≈ $100K of the $139K total exposure (~72%). The model's output is this ranked segment/customer list (`outputs/churn_segment_revenue.csv`), not an accuracy trophy.
 
 ---
 

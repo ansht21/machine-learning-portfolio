@@ -92,7 +92,7 @@ model = train_model(X_train, y_train, n_estimators=100)
 # Evaluate model
 metrics = evaluate_model(model, X_test, y_test)
 print(f"Model Performance:")
-print(f"  RÂ² Score: {metrics['r2']:.3f}")
+print(f"  R² Score: {metrics['r2']:.3f}")
 print(f"  RMSE: {metrics['rmse']:.2f}")
 print(f"  MAE: {metrics['mae']:.2f}")
 
@@ -121,7 +121,7 @@ model = train_model(X_train, y_train)
 metrics = evaluate_model(model, X_test, y_test)
 save_model(model, 'models/car_price_model.pkl')
 
-print(f'Training Complete - RÂ²: {metrics[\"r2\"]:.3f}')
+print(f'Training Complete - R²: {metrics[\"r2\"]:.3f}')
 "
 ```
 
@@ -159,7 +159,7 @@ The model is evaluated using standard regression metrics:
 | **MAE** | $\frac{1}{n}\sum\|y_i - \hat{y}_i\|$ | Average absolute error |
 | **MSE** | $\frac{1}{n}\sum(y_i - \hat{y}_i)^2$ | Average squared error |
 | **RMSE** | $\sqrt{MSE}$ | Error in same units as target |
-| **RÂ²** | $1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}$ | Proportion of variance explained |
+| **R²** | $1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}$ | Proportion of variance explained |
 
 ---
 
@@ -190,12 +190,12 @@ tests/test_model.py::test_model_training PASSED
 After running the training script, you should see output similar to:
 ```
 Model Performance:
-  RÂ² Score: 0.91
+  R² Score: 0.91
   RMSE: 1.69
   MAE: 1.32
 ```
 
-This indicates the model explains 91% of the variance in car prices, with average prediction errors of approximately â‚¹1.32 lakhs.
+This indicates the model explains 91% of the variance in car prices, with average prediction errors of approximately ₹1.32 lakhs.
 
 ---
 
