@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # Data Science Projects
 
@@ -31,8 +31,9 @@
 |---|---------|--------------|----------|--------|
 | 1 | [Ride Demand and Revenue Forecasting](#1--ride-demand-and-revenue-forecasting) | Time series · Clustering · Regression | SARIMA · K-Means · Random Forest · LLM Forecast Guard | **R² = 0.972** fare model · **MAPE 8.3%** forecast · **GenAI anomaly briefs** |
 | 2 | [Subscription Churn Prediction](#2--subscription-churn-prediction--retention-analytics) | Binary classification · RAG | LogReg + Random Forest · ChromaDB RAG + LLM offers | **ROC-AUC 0.839** · 80.0% accuracy · **GenAI retention gateway** |
+| 10 | [E-Commerce Revenue Reconciliation & Leakage AI Engine](#10--ecommerce-revenue-reconciliation--leakage-ai-engine) | Binary Classification · Anomaly Detection · Financial AI | GradientBoosting · Isolation Forest · GenAI Audit Copilot | **ROC-AUC 0.921** · **Precision 94.8%** · ₹83L Leakage Audit |
 
-> **Note:** These two projects are cross-listed from the [Data Analytics repository](https://gitlab.com/ansht_121/data-analytics) — the SQL / EDA / dashboard layers live there; this repository contains the full predictive modeling layer.
+> **Note:** These projects are cross-listed from the [Data Analytics repository](https://gitlab.com/ansht_121/data-analytics) — the SQL / EDA / finance reporting layers live there; this repository contains the full predictive modeling, machine learning, and AI layers.
 
 ### Standalone Machine Learning Projects
 
@@ -399,9 +400,41 @@ jupyter notebook music_recommendation.ipynb
 
 ---
 
+## 10 · E-Commerce Revenue Reconciliation & Leakage AI Engine
+
+**Problem:** An e-commerce operator invoiced **₹7.86 Cr** across 128,976 order lines. How much cash was actually realized in the bank, what leaked through cancellations and returns, and how can predictive AI intercept leakage before orders ship?
+
+*Cross-listed from the [Data Analytics repo](https://gitlab.com/ansht_121/data-analytics) — the raw SQL / openpyxl financial pipeline lives there; this folder contains the full predictive ML risk model, anomaly detection, cash clearance forecaster, and AI audit agent.*
+
+![E-Commerce Reconciliation & AI Cockpit](./10_ecommerce-reconciliation-engine/image/ecommerce_reconciliation_cockpit.png)
+*Executive Revenue Reconciliation & AI Leakage Cockpit — Metric Flow aligned layout with Cyber-Violet & Emerald Luxury theme, live ML risk scoring, and cash liquidation forecasting.*
+
+### Pipeline Architecture
+
+```
+128,976 transactions (Amazon India Marketplace)
+  ↓ Deterministic financial reconciliation matrix (Net Realized vs True Leakage vs Transit Lag)
+  ↓ Pre-dispatch feature engineering (order economics, category, geographic risk tiering)
+  ↓ GradientBoosting Classifier (ROC-AUC 0.921, Precision 94.8%) — order leakage propensity
+  ↓ Isolation Forest — multi-dimensional transaction anomaly detection
+  ↓ 3-stage liquidation curve forecaster — turns ₹5.16 Cr In-Transit lag into bank cash timeline
+  ↓ Autonomous AI Financial Audit Agent — CFO variance briefs & root cause diagnostic
+```
+
+### Results (Held-Out Test Set $N = 9,842$)
+
+| Metric / Model | Performance | Operational Impact |
+|:---|:---:|:---|
+| **GradientBoosting Leakage Model** | **ROC-AUC 0.921** · PR-AUC 0.926 | Flags high-risk cancellations & returns prior to dispatch |
+| **Model Precision** | **94.84%** | Minimizes false flags on safe orders |
+| **Model F1-Score** | **0.8208** (Acc: 86.87%) | Optimal balance between retention and fraud/cancellation capture |
+| **Audited Clearance Rate** | **69.18%** | Separates ₹83.07 Lakh true leakage from ₹5.16 Cr harmless transit lag |
+
+ðŸ“  [`10_ecommerce-reconciliation-engine/`](./10_ecommerce-reconciliation-engine/)
+
 ---
 
-## ðŸ¤– How These Models Are Built in the AI Era
+## 🤖 How These Models Are Built in the AI Era
 
 Every model in this repository follows the same discipline: **AI accelerates, humans validate.**
 

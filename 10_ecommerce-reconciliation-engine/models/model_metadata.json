@@ -1,0 +1,57 @@
+{
+  "best_model": "GradientBoosting",
+  "metrics": {
+    "RandomForest": {
+      "roc_auc": 0.8901,
+      "pr_auc": 0.8991,
+      "accuracy": 0.8479,
+      "precision": 0.9463,
+      "recall": 0.6721,
+      "f1_score": 0.786
+    },
+    "GradientBoosting": {
+      "roc_auc": 0.9209,
+      "pr_auc": 0.9264,
+      "accuracy": 0.8687,
+      "precision": 0.9484,
+      "recall": 0.7235,
+      "f1_score": 0.8208
+    }
+  },
+  "feature_names": [
+    "order_dayofweek",
+    "is_weekend",
+    "order_day",
+    "amount_clean",
+    "qty_clean",
+    "unit_price",
+    "is_b2b",
+    "is_expedited",
+    "state_grouped_DELHI",
+    "state_grouped_GUJARAT",
+    "state_grouped_HARYANA",
+    "state_grouped_KARNATAKA",
+    "state_grouped_KERALA",
+    "state_grouped_MAHARASHTRA",
+    "state_grouped_OTHER",
+    "state_grouped_RAJASTHAN",
+    "state_grouped_TAMIL NADU",
+    "state_grouped_TELANGANA",
+    "state_grouped_UTTAR PRADESH",
+    "state_grouped_WEST BENGAL",
+    "category_grouped_Perfume",
+    "category_grouped_Shirt",
+    "category_grouped_Shoes",
+    "category_grouped_Socks",
+    "category_grouped_T-shirt",
+    "category_grouped_Trousers",
+    "category_grouped_Wallet",
+    "size_grouped_L",
+    "size_grouped_M",
+    "size_grouped_OTHER",
+    "size_grouped_S",
+    "size_grouped_XL",
+    "size_grouped_XS",
+    "size_grouped_XXL"
+  ]
+}
